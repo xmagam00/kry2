@@ -5,4 +5,4 @@ build:
 pack:
 	zip xmagam00.zip kry.cpp Makefile
 clean:
-	rm xmagam00.zip kry
+	rm -f xmagam00.zip kry
