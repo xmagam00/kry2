@@ -18,35 +18,49 @@ int main(int argc, char **argv)
 	//generate public and private key
 	if( strcmp(argv[1], "-g") == 0 && argc == 3) {
 		long sizeInBits = atol(argv[2]);
-con= true;
-long firstNumber = random(0,sizeInBits/2);
-long secondNumber = random(0,sizeInBits/2);
-
-while(con) {
- int iteration = 100;
-    ll num;
-    cout<<"Enter integr to test primality: ";
-    cin>>num;
-    if (Solovoy(firstNumber, iteration) && Solovoy(firstNumber, iteration)) {
-    	con = false;
-    } else {
-    	firstNumber = random(0,sizeInBits/2);
-    	secondNumber = random(0,sizeInBits/2);
-    	//generateNew Numbers
+    con= true;
+    long firstNumber = random(0,sizeInBits/2);
+    long secondNumber = random(0,sizeInBits/2);
+    secondNumber = setMSB1(secondNumber);
+    firstNumber = setMSB1(firstNumber);
+    while(con) {
+      if (Solovoy(firstNumber, 100) && Solovoy(firstNumber, 100)) {
+      	con = false;
+      } else {
+      	firstNumber = random(0,sizeInBits/2);
+    	 secondNumber = random(0,sizeInBits/2);
+         secondNumber = setMSB1(secondNumber);
+        firstNumber = setMSB1(firstNumber);
+    	 //generateNew Numbers
+      }
     }
-}
-mpz_t modulus, phin, publicKey;
-mpz_init(modulus);
-mpz_init(phin);
-mpz_init(publicExp);
+  mpz_t modulus, phin, publicExp;
+  mpz_init(modulus);
+  mpz_init(phin);
+  mpz_init(publicExp);
 
-mpz_mul(modulus, firstNumber, secondNumber);
-mpz_mul(phin, firstNumber -1, secondNumber -1);
-if (gmp_cmp(gcd(3,phin) == 1) {
-	publicExp = 3;
-} else {
-  publicExp = 2^16+1;
-}
+  mpz_mul(modulus, firstNumber, secondNumber);
+  mpz_mul(phin, firstNumber -1, secondNumber -1);
+  if (gmp_cmp(gcd(3,phin) == 1) {
+	   publicExp = 3;
+  } else {
+    publicExp = 2^16+1;
+  }
+  privateExp = modInverse(publicExp, modulus);
+  long pHex;
+  sprintf(firstNumber,"%LX",firstNumber);
+  printf("%l ", firstNumber );
+   sprintf(secondNumber,"%LX",secondNumber);
+  printf("%l ", secondNumber );
+
+  sprintf(modulus,"%LX",modulus);
+  printf("%l ",modulus );
+  sprintf(publicExp,"%LX",publicExp);
+  printf("%l ",publicExp );
+  sprintf(privateExp,"%LX",privateExp);
+  printf("%l ",privateExp );
+
+
 
 
 	} else if (strcmp(argv[1], "-e") == 0 && argc == 5) {
